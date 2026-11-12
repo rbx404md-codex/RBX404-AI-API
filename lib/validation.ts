@@ -56,7 +56,10 @@ export function validateOpenAIBody(body: unknown, cfg: Config): Record<string, a
   const publicModel = validateModel(body.model, cfg);
   validateMessages(body.messages);
   checkNumbers(body, cfg);
-  const out = { ...body, model: resolveUpstreamModel(publicModel, cfg) };
+  const out: Record<string, any> = {
+  ...body,
+  model: resolveUpstreamModel(publicModel, cfg),
+};
   if (out.max_tokens === undefined && out.max_completion_tokens === undefined) out.max_tokens = cfg.maxTokens; // cap only
   return out;
 }
